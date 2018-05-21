@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Авторизация</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+      <section class="main-container">
+        <h1>Задание к лекции 4.3 «SELECT из нескольких таблиц»</h1>
+        <h2>Авторизация</h2>
+        <div class="result">
+            {{result}}
+        </div>
+        <div class="form-container">
+            <form action="?/user/auth" method="POST" class="user-input-form">
+                <input type="text" name="user_name" placeholder="Имя пользователя" value=""> 
+                <input type="password" name="user_password" placeholder="Пароль" value="">
+                <input type="submit" name="enter" value="Вход" class="button select-button">
+                <input type="submit" name="register" value="Регистрация" class="button select-button">
+            </form><br>
+            <a class="logout-button" href="?/user/logouth">Выход</a>
+        </div>
+    </section>
+    </body>
+</html>
