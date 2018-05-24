@@ -1,0 +1,20 @@
+<div class="part-2">
+    <table class="table">
+        <thead class="table-head">
+            <tr class="header-row">
+                <td class="column-description">Id</td>
+                <td class="column-description">Login</td>
+                <td class="column-date">Password</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr class="table-row">
+                <td class="">{{ user.id }}</td>
+                <td class="">{{ user.login }}</td>
+                <td class="">{{ user.password }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

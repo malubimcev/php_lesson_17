@@ -1,5 +1,5 @@
 <?php
-require_once 'View.php';
+require_once 'view/View.php';
 
 class BookView extends View
 {
@@ -16,5 +16,3 @@ class BookView extends View
     }
 
 }//end class BookView
-
-

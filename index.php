@@ -1,27 +1,25 @@
 <?php
-    require_once 'router/router.php';
+    require_once 'router/Router.php';
     
-    if (isset($_POST)) {
-        $router = new Router();
+    echo 'REQUEST_URI='.$_SERVER['REQUEST_URI'].'<br>=======<br>';
+    echo 'REQUEST_METHOD='.$_SERVER['REQUEST_METHOD'].'<br>=======<br>';
+//    echo '__FILE__='.__FILE__.'<br>=======<br>';
+//    echo 'DOCUMENT_ROOT='.$_SERVER['DOCUMENT_ROOT'];
+//    echo '<br>===POST===<br>';
+//    if (!empty($_POST)) {
+        $router = new Router('controller/');
         $router -> start();
-    }
+//        var_dump($_POST);
+//    }
+//    echo '<br>===GET===<br>';
+//    if (!empty($_GET)) {
+//        $router = new Router('controller/');
+//        $router -> start();
+////        var_dump($_GET);
+//    }
+    
+    include 'template/header.html';
+    include 'template/login.html';
+    include 'template/userList.html';//===================
+    include 'template/footer.html';
 ?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Авторизация</title>
-        <meta charset="UTF-8">
-    </head>
-    <body>
-      <section class="main-container">
-        <h1>Задание к лекции 4.3 «SELECT из нескольких таблиц»</h1>
-        <div class="form-container">
-            <form action="?/user/auth" method="POST" class="user-input-form">
-                <input type="text" name="user_name" placeholder="Имя пользователя" value=""> 
-                <input type="submit" name="enter" value="Вход" class="button select-button">
-            </form><br>
-            <a class="logout-button" href="?/user/logouth">Выход</a>
-        </div>
-    </section>
-    </body>
-</html>

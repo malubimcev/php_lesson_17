@@ -66,7 +66,23 @@ class User extends Model
     
     public function getById($id)
     {
-        ;
+        $request = 'SELECT
+                        id AS id,
+                        login,
+                        password
+                    FROM
+                        user
+                    WHERE
+                        id = :id';
+        $params = [
+            ':id' => $id
+        ];
+        $this -> recordset = $this -> do_request($request, $params);
+        if (empty($this -> recordset)) {
+            return NULL;
+        } else {
+            return $this -> recordset[0];
+        }
     }
     
     public function getByName($name)
@@ -84,9 +100,10 @@ class User extends Model
         ];
         $this -> recordset = $this -> do_request($request, $params);
         if (empty($this -> recordset)) {
-            $this -> recordset = $this -> get_empty_users();
+            return NULL;
+        } else {
+            return $this -> recordset[0];
         }
-        return $this -> recordset[0];
     }
     
     private function getEmptyList()//возвращает пустой набор пользователей

@@ -1,8 +1,18 @@
 <?php
+require_once 'view/View.php';
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+class UserView extends View
+{
+    private $template = 'users.html';
+    
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
+    public function render($data)
+    {
+        parent::render($this -> template, array('users' => $data));    
+    }
 
+}//end class BookView

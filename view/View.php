@@ -1,6 +1,6 @@
 <?php
     
-require_once './../vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
 class View
 {
@@ -9,7 +9,7 @@ class View
     private $twig = NULL;
     
     public function __construct() {
-        $this -> loader = new Twig_Loader_Filesystem('./../template');
+        $this -> loader = new Twig_Loader_Filesystem('./template');
         $this -> twig = new Twig_Environment($loader, array(
             'cache' => './cache',
             'auto_reload' => true,

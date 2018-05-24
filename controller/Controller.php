@@ -1,6 +1,6 @@
 <?php
 
-class Controller
+abstract class Controller
 {
     abstract function add($params);
     abstract function update($id, $params);
