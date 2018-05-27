@@ -8,7 +8,7 @@
         
 	public function __construct($dirController)
 	{
-            $this -> dirConroller = $dirController;
+            $this -> dirController = $dirController;
 	}
         
         public function start()
@@ -31,19 +31,18 @@
             $action = $route[1];
             $params = $this -> getParams();
             if (!empty($route[2])) {
-                $params = $route[2];    
+                $params['request'] = $route[2];    
             }
-            echo '<br> +++ params='; var_dump($params); echo '+++<br>';
+echo '<br> +++ params='; var_dump($params); echo '+++<br>';//return;//===================
             if (is_file($controllerFile)) {
                 require_once $controllerFile;
-                echo 'exist file='.$controllerFile.'<br>';
                 if (class_exists($controllerName)) {
                     $this -> controller = new $controllerName();
-                    echo 'exist controller='.$controllerName.'<br>';
                     if (method_exists($this -> controller, $action)) {
-                        //$this -> controller -> $action($params);
-                        echo 'exist action='.$action.'<br>';
-                    } else {echo 'does not exist action='.$action.'<br>';}
+                        $this -> controller -> $action($params);
+                    } else {
+//echo 'does not exist action='.$action.'<br>';}//=======================================
+                    }
                 }
             }
         }
@@ -53,15 +52,16 @@
             $params = [];
             switch($_SERVER['REQUEST_METHOD']) { 
                 case "GET" :
-                    $params = $_GET;
+                    $params = filter_input_array(INPUT_GET, $_GET);
                     break;
                 case "POST" :
-                    $params = $_POST;
+                    $params = filter_input_array(INPUT_POST, $_POST);
                     break;
                 default : 
-                    $params = $_GET;
+                    $params = filter_input_array(INPUT_GET, $_GET);
                 break;
             }
             return $params;
         }
+        
     }//end class Router

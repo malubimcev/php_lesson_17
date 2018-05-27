@@ -3,7 +3,7 @@ require_once 'view/View.php';
 
 class TaskView extends View
 {
-    private $template = 'tasks.html';
+    private $template = 'tasks.php';
     
     public function __construct()
     {
@@ -12,7 +12,8 @@ class TaskView extends View
     
     public function render($data)
     {
-        parent::render($this -> template, array('tasks' => $data));    
+        parent::render($this -> template, array('tasks' => $data));
+        //parent::render($this -> template, array('tasks' => $data));
     }
 
 }//end class BookView

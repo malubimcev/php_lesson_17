@@ -26,7 +26,7 @@ class Task extends Model
             ':user_id' => $author_id,
             ':assigned_user_id' => $assigned_user_id
         ];
-        $this -> do_request($request, $params);
+        parent::doRequest($request, $params);
         return;
     }
     
@@ -39,26 +39,26 @@ class Task extends Model
         $params = [
             ':id' => $id
         ];
-        $this -> do_request($request, $params);
+        parent::doRequest($request, $params);
         return;
     }
     
     public function update($id, $params) 
     {
-        ;
+        //
     }
     
-    private function getList()
+    public function getList()
     {
-        ;
+        //
     }
     
     public function getById($id)
     {
-        ;
+        //
     }
     
-    public function getByUser($user_id)
+    public function getByUser($user_name)
     {
         $user_id = $this -> get_user_id($user_name);
         $request = 'SELECT
@@ -81,14 +81,14 @@ class Task extends Model
         $params = [
             ':user_id' => $user_id
         ];
-        $this -> recordset = $this -> do_request($request, $params);
+        $this -> recordset = parent::doRequest($request, $params);
         if (!isset($this -> recordset)) {
             $this -> recordset = $this -> get_empty_tasks();
         }
         return $this -> recordset;
     }
     
-    public function getByAuthor($author_id)
+    public function getByAuthor($author_name)
     {
         $author_id = $this -> get_user_id($author_name);
         $request = 'SELECT
@@ -110,7 +110,7 @@ class Task extends Model
         $params = [
             ':author_id' => $author_id
         ];
-        $this -> recordset = $this -> do_request($request, $params);
+        $this -> recordset = parent::doRequest($request, $params);
         if (!isset($this -> recordset)) {
             $this -> recordset = $this -> get_empty_tasks();
         }
@@ -129,7 +129,7 @@ class Task extends Model
             ':user_id' => $user_id,
             ':id' => $task_id
         ];
-        $this -> do_request($request, $params);
+        parent::doRequest($request, $params);
         return;
     }
 
@@ -145,7 +145,7 @@ class Task extends Model
             ':is_done' => 1,
             ':id' => $id
         ];
-        $this -> do_request($request, $params);
+        parent::doRequest($request, $params);
         return;
     }
     

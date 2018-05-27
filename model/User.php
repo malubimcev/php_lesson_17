@@ -14,7 +14,7 @@ class User extends Model
 
     public function add($params) 
     {
-        $is_exist = $this -> get_user_id($login);
+        $is_exist = $this -> getByName($login);
         if ($is_exist === 0) {
             $request = 'INSERT INTO user (
                             login,
@@ -26,7 +26,7 @@ class User extends Model
                 ':login' => $login,
                 ':password' => $password
             ];
-            $this -> do_request($request, $params);
+            parent::doRequest($request, $params);
             return TRUE;
         } else {
             return FALSE;
@@ -35,12 +35,12 @@ class User extends Model
     
     public function delete($id) 
     {
-        ;
+        //
     }
     
     public function update($id, $params) 
     {
-        ;
+        //
     }
     
     public function getList()
@@ -57,7 +57,7 @@ class User extends Model
         $params = [
             '' => ''
         ];
-        $this -> recordset = $this -> do_request($request, $params);
+        $this -> recordset = parent::doRequest($request, $params);
         if (empty($this -> recordset)) {
             $this -> recordset = $this -> get_empty_users();
         }
@@ -77,7 +77,7 @@ class User extends Model
         $params = [
             ':id' => $id
         ];
-        $this -> recordset = $this -> do_request($request, $params);
+        $this -> recordset = parent::doRequest($request, $params);
         if (empty($this -> recordset)) {
             return NULL;
         } else {
@@ -96,9 +96,9 @@ class User extends Model
                     WHERE
                         login = :login';
         $params = [
-            ':login' => $login
+            ':login' => $name
         ];
-        $this -> recordset = $this -> do_request($request, $params);
+        $this -> recordset = parent::doRequest($request, $params);
         if (empty($this -> recordset)) {
             return NULL;
         } else {

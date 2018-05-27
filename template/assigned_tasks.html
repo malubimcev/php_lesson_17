@@ -1,0 +1,36 @@
+<div class="part-2">
+    <h3>Список задач, порученных вам другими пользователями</h3>
+    <table class="table">
+        <thead class="table-head">
+            <tr class="header-row">
+                <td class="column-description">Описание задачи</td>
+                <td class="column-date">Дата добавления</td>
+                <td class="column-status">Статус</td>
+                <td class="column-action">Действия</td>
+                <td class="column-assigned_user">Ответственный</td>
+                <td class="column-author">Автор</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in assigned_tasks %}
+            <tr class="table-row">
+                {{ task.id }}
+                <td class="column-description">{{ task.description }}</td>
+                <td class="column-date">{{ task.date_added }}</td>
+                <td class="column-status">
+                    {% if task.is_done == 1 %}
+                        <span class="task-isdone">выполнено</span>
+                    {% else %}
+                        <span class="task-active">в работе</span>
+                    {% endif %}
+                </td>
+                <td class="column-action">
+                    <a href="?/task/done/id={{ id }}">Выполнить</a><br>
+                </td>
+                <td class="column-assigned_user">{{ authorized_user }}</td>
+                <td class="column-author">{{ task.author }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

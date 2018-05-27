@@ -8,20 +8,20 @@ class UserController extends Controller {
 
     private $data = [];
     private $errors = [];
+    private $result ='';
 
     public function add($params)
     {
         $user = new User();
         if (count($params) > 0) {
             $this -> data = $this -> parseUserData($params);
-            if (count($errors) == 0) {
+            if (count($this -> errors) == 0) {
                 $idAdd = $user -> add($this -> data);
                 if ($idAdd) {
-                    header('Location: /');
+                    header('Location: /?/user/login/');
                 }
             }
         }
-//        Di::get()->render('book/add.php');        
     }
 
     public function delete($id)
@@ -30,21 +30,21 @@ class UserController extends Controller {
             $user = new User();
             $isDelete = $user -> delete($id);
             if ($isDelete) {
-                header('Location: /');
+                header('Location: /?/user/login/');
             }
         }
     }
 
     public function update($id, $params)
     {
-        
+        //
     }
 
     public function getList()
     {
         $user = new User();
         $this -> data = $user -> getList();
-        if (!enpty($this -> data)) {
+        if (!empty($this -> data)) {
             $view = new BookView();
             $view -> render($this -> data);
         }
@@ -53,47 +53,42 @@ class UserController extends Controller {
     public function logout()
     {
         session_destroy();
-        $this -> redirect('index.php');
+        parent::redirect('index.php');
     }
 
     public function login($data)
     {
-        $result = ''; //для вывода результата на страницу
-        $this -> parseUserData($data);
+        $this -> data = $this -> parseUserData($data);
 
-        if (!($this -> isAuthorized())) {
-            $result = 'Введите имя и пароль';
-            $this -> redirect('index.php');
-        } else {
-            $authorized_user = get_authorized_user();
-        }
-        $errorArray = []; //массив для записи ошибок
+//        if (!($this -> isAuthorized())) {
+//            $this ->  result = 'Введите имя и пароль';
+//            $this -> redirect('index.php');
+//        } else {
+//            $authorized_user = get_authorized_user();
+//        }
 
-        if ((isset($_POST['user_name'])) && (isset($_POST['user_password']))) {
+        if ((isset($this -> data['user_name'])) && (isset($this -> data['user_password']))) {
             $login = $_POST['user_name'];
             $password = $_POST['user_password'];
             if (isset($_POST['enter'])) {
-                if (login($login, $password)) {
-                    redirect('tasks.php');
+                if ($this -> checkUser($login, $password)) {
+                    parent::redirect('index.php');//========================================================
                 } else {
-                    $result = 'Пользователь не зарегистрирован';
+                    $this -> result = 'Пользователь не зарегистрирован';
                 }
             }
             if (isset($_POST['register'])) {
-                saveUser($login, $password);
-                $result = 'Вы зарегистрированы';
+                $this -> add($login, $password);
+                $this -> result = 'Вы зарегистрированы';
             }
         } else {
-            $result = 'Введите имя и пароль';
+            $this -> result = 'Введите имя и пароль';
         }
-        if (!$user) {
-            return FALSE;
-        } else {
-            if ($user['password'] === $password) {
-                $_SESSION['user'] = $user;
-                return TRUE;
-            }
-        }
+    }
+    
+    public function getResult()
+    {
+        return $this -> result;
     }
 
     private function parseUserData($data)
@@ -132,8 +127,21 @@ class UserController extends Controller {
     private function isAuthorized()
     {
         return !empty($_SESSION['user']);
-        session_start();
-        $errors = [];
+    }
+    
+    private function checkUser($login, $password)
+    {
+        $user = $this -> getUser($login);
+        if (!$user) {
+            return FALSE;
+        } else {
+            if ($user['password'] === $password) {
+                session_start();
+                $_SESSION['user'] = $user;
+                return TRUE;
+            }
+        }
+        
     }
 
 }//end class Usercontroller

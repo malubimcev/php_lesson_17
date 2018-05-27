@@ -3,7 +3,7 @@ require_once 'view/View.php';
 
 class UserView extends View
 {
-    private $template = 'users.html';
+    private $template = 'template/users.php';
     
     public function __construct()
     {
